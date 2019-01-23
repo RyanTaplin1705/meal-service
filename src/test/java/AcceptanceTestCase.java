@@ -1,25 +1,25 @@
 import com.googlecode.yatspec.state.givenwhenthen.TestState;
 
-import configuration.AppConfiguration;
-import configuration.TestAppConfiguration;
+import configuration.IConfiguration;
+import configuration.TestConfiguration;
 import org.junit.After;
+import org.junit.Before;
 
 public class AcceptanceTestCase extends TestState {
 
-    public ApplicationMain APPLICATION;
-    public AppConfiguration DEFAULT_CONFIG = new TestAppConfiguration();
+    public ApplicationMain APPLICATION = new ApplicationMain(new TestConfiguration());
+
+    @Before
+    public void setUp() throws Exception {
+        APPLICATION.start();
+    }
 
     @After
     public void tearDown() throws Exception {
         APPLICATION.stop();
     }
 
-    public void andTheServerIsRunning() {
-         APPLICATION = new ApplicationMain(DEFAULT_CONFIG);
-         APPLICATION.start();
-    }
-
-    public void andTheServerIsRunningWithConfiguration(AppConfiguration config) {
+    public void theServerIsRunningWithConfiguration(IConfiguration config) {
         APPLICATION = new ApplicationMain(config);
         APPLICATION.start();
     }
